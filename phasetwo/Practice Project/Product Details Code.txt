@@ -1,0 +1,89 @@
+Product Details
+
+
+packagecom.hari.training;
+
+importjava.io.IOException;
+importjavax.servlet.ServletException;
+importjavax.servlet.annotation.WebServlet;
+importjavax.servlet.http.HttpServlet;
+importjavax.servlet.http.HttpServletRequest;
+importjavax.servlet.http.HttpServletResponse;
+importjavax.servlet.http.HttpSession;
+
+@WebServlet("/app")
+publicclass Validation extendsHttpServlet {
+	privatestaticfinallongserialVersionUID = 1L;
+
+	protectedvoiddoGet(HttpServletRequestrequest, HttpServletResponseresponse) throwsServletException, IOException {
+		// TODO Auto-generated method stub
+		
+		String pId = request.getParameter("productId");
+		String pName = request.getParameter("productName");
+		String pPrice = request.getParameter("productPrice");
+		
+		HttpSessiontheSession = request.getSession();
+		
+		theSession.setAttribute("pid", pId);
+		theSession.setAttribute("pname", pName);
+		theSession.setAttribute("pprice", pPrice);
+		
+response.sendRedirect("display.jsp");
+		
+		
+	}
+
+}
+
+------------------------------------------------------------------------------------------------------------
+
+Product.JSP
+
+<%@pagelanguage="java"contentType="text/html; charset=ISO-8859-1"
+pageEncoding="ISO-8859-1"%>
+<!DOCTYPEhtml>
+<html>
+<head>
+<metacharset="ISO-8859-1">
+<title>Product Details</title>
+</head>
+<body>
+<h1>Enter Product Details</h1>
+<hr>
+<formaction="app">
+<inputtype="text"name="productId"placeholder="PRODUCT ID"><br>
+<inputtype="text"name="productName"placeholder="PRODUCT NAME"><br>
+<inputtype="text"name="productPrice"placeholder="PRODUCT PRICE"><br>
+<inputtype="submit"value="ENTER">
+</form>
+</body>
+</html>
+
+
+
+
+Product.jsp(2)
+
+
+<%@pagelanguage="java"contentType="text/html; charset=ISO-8859-1"
+pageEncoding="ISO-8859-1"%>
+<!DOCTYPEhtml>
+<html>
+<head>
+<metacharset="ISO-8859-1">
+<title>Display</title>
+</head>
+<body>
+
+<h1>Displaying the Product Details....</h1>
+<hr>
+<%="Product Id : " + session.getAttribute("pid") %><br><br>
+
+<%="Product Name : " + session.getAttribute("pname") %><br><br>
+
+<%="Product Price : " + session.getAttribute("pprice") %>
+
+
+</body>
+
+</html>

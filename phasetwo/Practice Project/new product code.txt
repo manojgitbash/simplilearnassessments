@@ -1,0 +1,130 @@
+importjavax.persistence.Column;
+importjavax.persistence.GeneratedValue;
+importjavax.persistence.GenerationType;
+importjavax.persistence.Id;
+importjavax.persistence.Table;
+
+
+@javax.persistence.Entity
+@Table(name = "students")
+publicclass students {
+
+	public String getname() {
+		returngetname();
+	}
+
+	publicvoidsetname(String name ) {
+		this.name = name;
+	}
+
+	publicintgets_id() {
+		returns_id;
+	}
+
+	publicvoidsets_id(ints_id) {
+		this.s_id = s_id;
+	}
+
+	public String gets_course() {
+		returns_course;
+	}
+
+	publicvoidsets_course(String s_course) {
+		this.s_course = s_course;
+	}
+	publicintgetc_id() {
+		returnc_id;
+	}
+
+	publicvoidsetc_id(intc_id) {
+		this.c_id = c_id;
+	}
+
+
+	@Id
+	@Column(name="c_id")
+	intc_id;
+	@Column(name = "s_course")
+	String s_course;
+	@Column(name = "s_id")
+	ints_id;
+	@Column(name="name")
+//	@GeneratedValue(strategy = GenerationType.IDENTITY)
+String name;
+	
+	
+	
+	
+
+	public students() {
+		// TODO Auto-generated constructor stub
+	}
+
+	@Override
+	public String toString() {
+		return"Learner [learnerId=" + name + ", learnerName=" + s_id + ", learnerDomain=" + s_course+",courseid="+c_id
+				+ "]";
+	}
+
+	public students(String name,ints_id, String s_course,intc_id) {
+	
+		this.name = name;
+		this.s_id=s_id;
+		this.s_course=s_course;
+		this.c_id=c_id;
+//		this.learnerDomain = learnerDomain;
+	}
+	
+	
+	
+}
+--------------------------------------------------------------------------------------------------------------------------
+
+importjava.util.List;
+
+importorg.hibernate.Session;
+importorg.hibernate.SessionFactory;
+importorg.hibernate.cfg.Configuration;
+
+publicclass App 
+{
+publicstaticvoid main( String[] args )
+    {
+//        Get the SessionFactory
+	SessionFactoryfactory = newConfiguration()
+								.configure("hibernate.cfg.xml")
+								.addAnnotatedClass(students.class)
+								.buildSessionFactory();
+	
+//    	Get the Session
+	Session theSession = factory.getCurrentSession();
+	
+	try {
+//    		Add a new learner
+studentstheLearner = new students("m.anil",109,"devops",1105);
+		
+		
+//    		Start the transaction
+		theSession.beginTransaction();
+		
+//    		Save the learner
+		theSession.save(theLearner);
+		
+//    		Commit the transaction
+		theSession.getTransaction().commit();
+		System.out.println("new students sucessfully inserted ");
+		System.out.println("Learner id : " + theLearner.name);
+		
+//    		Learner learner = theSession.get(Learner.class, 2);
+//    		
+//    		System.out.println("Learner details by id : " + learner);
+		
+
+		
+		
+		
+	}finally {
+		factory.close();
+	}
+    }}
+
